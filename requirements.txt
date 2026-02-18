@@ -1,4 +1,3 @@
-**Installationer som krävs:**
 streamlit
 numpy
 joblib
