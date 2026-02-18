@@ -119,6 +119,9 @@ if st.session_state.stage == "draw":
                     Image.fromarray(img_array.astype(np.uint8))
                     .resize((28, 28), Image.Resampling.LANCZOS)
                 )
+            # Debug kod    
+            st.image(img_array, caption="Input till modellen (28x28)", clamp=True)
+
             # 5️⃣ Platta ut
             img_flat = img_array.reshape(1, -1)
 
