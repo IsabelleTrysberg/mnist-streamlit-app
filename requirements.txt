@@ -1,0 +1,9 @@
+**Installationer som krävs:**
+streamlit
+numpy
+joblib
+pillow
+streamlit-drawable-canvas
+scikit-learn
+pandas
+plotly
