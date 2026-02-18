@@ -190,6 +190,13 @@ if st.session_state.stage == "predicted":
 # =============================
 if st.session_state.stage == "done_yes":
     st.success("WOOHO! Jag är grym på siffror! 🎉🤖")
-
+    if st.button("🔄 Tillbaka till start"):
+        st.session_state.stage = "draw"
+        st.session_state.canvas_key = "canvas_cleared"
+        st.rerun()
 if st.session_state.stage == "done_no":
     st.info("Åh nej… 😭 Jag ska träna mer! 💪")
+    if st.button("🔄 Tillbaka till start"):
+        st.session_state.stage = "draw"
+        st.session_state.canvas_key = "canvas_cleared"
+        st.rerun()
