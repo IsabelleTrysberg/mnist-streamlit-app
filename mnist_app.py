@@ -5,12 +5,27 @@ from PIL import Image
 from streamlit_drawable_canvas import st_canvas
 import pandas as pd
 import plotly.express as px
+from sklearn.base import BaseEstimator, TransformerMixin
+
 
 st.set_page_config(
     page_title="MNIST Sifferigenkänning",
     page_icon="🔢",
     layout="centered"
 )
+
+# =============================
+# Skapar en transformer för att minska antal pixlar
+# =============================
+
+class ResizeImages(BaseEstimator, TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X_images = X.reshape(-1, 28, 28)
+        X_cropped = X_images[:, 4:24, 4:24]
+        return X_cropped.reshape(-1, 20 * 20)
 
 # =============================
 # Ladda modell (hela pipelinen)
