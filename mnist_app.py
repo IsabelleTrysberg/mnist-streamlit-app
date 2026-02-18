@@ -104,6 +104,21 @@ if st.session_state.stage == "draw":
             # 4️⃣ Konvertera till numpy (0–255, samma som träningen)
             img_array = np.array(img)
 
+            # Tröskla bilden (tydligare svart/vit)
+            img_array = np.where(img_array > 50, 255, 0)
+
+            # Hitta bounding box
+            coords = np.column_stack(np.where(img_array > 0))
+            if coords.size > 0:
+                y_min, x_min = coords.min(axis=0)
+                y_max, x_max = coords.max(axis=0)
+                img_array = img_array[y_min:y_max+1, x_min:x_max+1]
+
+                # ✅ VIKTIGT: Resize tillbaka till 28x28
+                img_array = np.array(
+                    Image.fromarray(img_array.astype(np.uint8))
+                    .resize((28, 28), Image.Resampling.LANCZOS)
+                )
             # 5️⃣ Platta ut
             img_flat = img_array.reshape(1, -1)
 
