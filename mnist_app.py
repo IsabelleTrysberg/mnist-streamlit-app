@@ -89,36 +89,46 @@ if st.session_state.stage == "draw":
     if predict_button:
         if canvas_result.image_data is not None:
 
-            # 1️⃣ Hämta RGBA-bilden
+            # Hämta RGBA-bilden
             img = Image.fromarray(
                 canvas_result.image_data.astype("uint8"),
                 mode="RGBA"
             )
 
-            # 2️⃣ Konvertera till gråskala
+            # Konvertera till gråskala
             img = img.convert("L")
 
-            # 3️⃣ Resize till exakt 28x28
-            img = img.resize((28, 28), Image.Resampling.LANCZOS)
-
-            # 4️⃣ Konvertera till numpy (0–255, samma som träningen)
+            # Konvertera till numpy 
             img_array = np.array(img)
 
-            # Tröskla bilden (tydligare svart/vit)
-            img_array = np.where(img_array > 50, 255, 0)
-
-            # Hitta bounding box
+            # Bounding box runt siffran
             coords = np.column_stack(np.where(img_array > 0))
-            if coords.size > 0:
-                y_min, x_min = coords.min(axis=0)
-                y_max, x_max = coords.max(axis=0)
-                img_array = img_array[y_min:y_max+1, x_min:x_max+1]
+            if coords.size == 0:
+                st.warning("Rita en siffra först.")
+                st.stop()
 
-                # ✅ VIKTIGT: Resize tillbaka till 28x28
-                img_array = np.array(
-                    Image.fromarray(img_array.astype(np.uint8))
-                    .resize((28, 28), Image.Resampling.LANCZOS)
-                )
+            y_min, x_min = coords.min(axis=0)
+            y_max, x_max = coords.max(axis=0)
+            digit = img_array[y_min:y_max+1, x_min:x_max+1]
+
+            # Skala så att största sidan blir 20 pixlar
+            h, w = digit.shape
+            scale = 20.0 / max(h, w)
+            new_w = max(1, int(round(w * scale)))
+            new_h = max(1, int(round(h * scale)))
+
+            digit_resized = np.array(
+                Image.fromarray(digit).resize((new_w, new_h), Image.Resampling.LANCZOS)
+            )
+
+            # Lägg på en 28x28 canvas (centrerad)
+            canvas = np.zeros((28, 28), dtype=np.uint8)
+            top = (28 - new_h) // 2
+            left = (28 - new_w) // 2
+            canvas[top:top+new_h, left:left+new_w] = digit_resized
+
+            img_array = canvas
+
             # Debug kod    
             st.session_state.last_image = img_array
 
