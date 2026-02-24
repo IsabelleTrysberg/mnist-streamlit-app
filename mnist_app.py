@@ -166,15 +166,10 @@ if st.session_state.stage == "predicted":
         "Sannolikhet (%)": probabilities * 100
     })
 
-    st.write(model.classes_)
-
     st.divider()
     st.markdown("## 🎯 Min gissning")
     st.markdown(f"# 🎉 Jag tror att det är en **{prediction}!**")
     st.markdown("Gissade jag rätt? 😉")
-
-    if st.session_state.get("last_image") is not None:
-        st.image(st.session_state.last_image, caption="Vad modellen ser (28x28)", clamp=True, width=150)
 
     st.markdown("### 📊 Sannolikheter")
 
