@@ -120,8 +120,8 @@ if st.session_state.stage == "draw":
             digit_resized = np.array(
                 Image.fromarray(digit).resize((new_w, new_h), Image.Resampling.LANCZOS)
             )
-            # Gör siffran lite smalare (test)
-            squeeze = 0.75  # testa 0.8–0.9
+            # Gör siffran lite smalare
+            squeeze = 0.82  # testat olika storlekar här
             new_w2 = max(1, int(round(digit_resized.shape[1] * squeeze)))
             digit_resized = np.array(
                 Image.fromarray(digit_resized).resize((new_w2, digit_resized.shape[0]), Image.Resampling.LANCZOS)
