@@ -121,7 +121,7 @@ if st.session_state.stage == "draw":
                 Image.fromarray(digit).resize((new_w, new_h), Image.Resampling.LANCZOS)
             )
             # Gör siffran lite smalare
-            squeeze = 0.82  # testat olika storlekar här
+            squeeze = 0.85  # testat olika storlekar här
             new_w2 = max(1, int(round(digit_resized.shape[1] * squeeze)))
             digit_resized = np.array(
                 Image.fromarray(digit_resized).resize((new_w2, digit_resized.shape[0]), Image.Resampling.LANCZOS)
@@ -130,8 +130,8 @@ if st.session_state.stage == "draw":
 
             # Lägg på en 28x28 canvas (centrerad)
             canvas = np.zeros((28, 28), dtype=np.uint8)
-            top = 4 + (20 - new_h) // 2 # anpassar efter min resize som klipper 4 pixlar från kanterna
-            left = 4 + (20 - new_w) // 2
+            top = (28 - new_h) // 2
+            left = (28 - new_w) // 2
             canvas[top:top+new_h, left:left+new_w] = digit_resized
 
             img_array = canvas
