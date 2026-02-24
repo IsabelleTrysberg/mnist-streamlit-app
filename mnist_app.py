@@ -166,6 +166,8 @@ if st.session_state.stage == "predicted":
         "Sannolikhet (%)": probabilities * 100
     })
 
+    st.write(model.classes_)
+
     st.divider()
     st.markdown("## 🎯 Min gissning")
     st.markdown(f"# 🎉 Jag tror att det är en **{prediction}!**")
