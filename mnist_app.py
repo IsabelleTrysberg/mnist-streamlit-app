@@ -123,8 +123,8 @@ if st.session_state.stage == "draw":
 
             # Lägg på en 28x28 canvas (centrerad)
             canvas = np.zeros((28, 28), dtype=np.uint8)
-            top = (28 - new_h) // 2
-            left = (28 - new_w) // 2
+            top = 4 + (20 - new_h) // 2 # anpassar efter min resize som klipper 4 pixlar från kanterna
+            left = 4 + (20 - new_w) // 2
             canvas[top:top+new_h, left:left+new_w] = digit_resized
 
             img_array = canvas
