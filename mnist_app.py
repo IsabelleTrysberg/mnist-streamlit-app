@@ -150,9 +150,6 @@ if st.session_state.stage == "draw":
 
             img_array = canvas
 
-            # Debug kod    
-            st.session_state.last_image = img_array
-
             # 5️⃣ Platta ut
             img_flat = img_array.reshape(1, -1)
 
@@ -235,7 +232,7 @@ if st.session_state.stage == "predicted":
             st.rerun()
 
 # =============================
-# Slutmeddelande (DONE)
+# Slutmeddelande 
 # =============================
 if st.session_state.stage == "done_yes":
     st.success("WOOHO! Jag är grym på siffror! 🎉🤖")
