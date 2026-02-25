@@ -133,6 +133,20 @@ if st.session_state.stage == "draw":
             top = (28 - new_h) // 2
             left = (28 - new_w) // 2
             canvas[top:top+new_h, left:left+new_w] = digit_resized
+            
+            # Beräkna center of mass
+            y_coords, x_coords = np.indices(canvas.shape)
+            total = canvas.sum()
+
+            if total != 0:
+                center_y = (y_coords * canvas).sum() / total
+                center_x = (x_coords * canvas).sum() / total
+                # Beräkna hur mycket den skall flyttas
+                shift_y = int(np.round(14 - center_y))
+                shift_x = int(np.round(14 - center_x))
+                # Flyttta bilden
+                canvas = np.roll(canvas, shift_y, axis=0)
+                canvas = np.roll(canvas, shift_x, axis=1)
 
             img_array = canvas
 
