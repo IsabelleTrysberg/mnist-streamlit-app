@@ -10,7 +10,7 @@ Detta projekt demonstrerar utveckling av en maskininlärningsmodell för handskr
 
 ## Del 1: Modellutveckling
 
-Se `mnist_model.ipynb` för:
+Se `mnist_develop.ipynb` för:
 
 - Exploratory Data Analysis (EDA)
 - Jämförelse av flera modeller:
@@ -21,7 +21,11 @@ Se `mnist_model.ipynb` för:
 - GridSearch för hyperparameter-optimering
 - Slutlig modell: **SVC med cirka 97.8% accuracy**
 
-Den slutgiltiga modellen tränades på hela datasetet och sparades som:
+
+## Del 2: Slutgiltig träning av vald modell
+
+Se `train_final_model_mnist.ipynb` för:
+Den slutgiltiga modellen som tränades på hela datasetet och sparades som:
 
 ```
 mnist_svc_model.pkl
@@ -29,7 +33,7 @@ mnist_svc_model.pkl
 
 ---
 
-## Del 2: Streamlit-app
+## Del 3: Streamlit-app
 
 Applikationen låter användaren rita en siffra (0–9) direkt i webbläsaren och få en prediktion från den tränade modellen.
 
